@@ -250,7 +250,7 @@ def delete_interval(bot, update):
 
 if __name__ == '__main__':
     # Create updater
-    updater = Updater('442058975:AAFN4myNncknoY7HZqeSqCb7amggqyM_05I')
+    updater = Updater('1827307330:AAFt7ErFEiDVmcYldf6mT0gkrMeuV3QYt20')
     # Register commands
     updater.dispatcher.add_handler(CommandHandler('spam', spam))
     updater.dispatcher.add_handler(CommandHandler('stop', stop))
