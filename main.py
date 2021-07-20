@@ -3,6 +3,7 @@ from telegram.error import BadRequest
 from set_interval import Interval
 from threading import Timer, Lock
 import logging
+import os
 
 # logging config
 logging.basicConfig(
@@ -250,7 +251,11 @@ def delete_interval(bot, update):
 
 if __name__ == '__main__':
     # Create updater
-    updater = Updater('442058975:AAFN4myNncknoY7HZqeSqCb7amggqyM_05I')
+    tokenvar = 'SPAMBOT_TOKEN'
+    token = os.getenv(tokenvar, None)
+    if token is None:
+        raise RuntimeError('{} must be defined'.format(tokenvar))
+    updater = Updater(token)
     # Register commands
     updater.dispatcher.add_handler(CommandHandler('spam', spam))
     updater.dispatcher.add_handler(CommandHandler('stop', stop))
