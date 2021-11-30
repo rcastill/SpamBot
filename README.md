@@ -1,61 +1,84 @@
-# What is this?
+# Newbotmbot - chat bot
+It is repository for chat bot: [@Newbotmbot](https://t.me/Newbotmbot)
 
-This is a joke between friends to make annoying reminders. The user (master) will give the bot a message to spam, then the bot will send a message every `/spamint` seconds and delete it after `/delint` seconds since sent. Multiple messages can be configured, each having independent interval settings.
+## What it is?
+This repository can be imported to [Bots.Business](https://bots.business) as a worked chat bot.
 
-The dependencies are ancient: the code has not been updated since sept, 2017.
+[Bots.Business](https://bots.business) - it is probably the first CBPaaS - Chat Bot Platform as a Service.
 
-## Development Environment
+A CBPaaS is a cloud-based platform that enables developers to create chatbots without needing to build backend infrastructure.
 
-Activate (setup if is the first time) the virtual env:
+## Create your own bot for Telegram from this Git repo
 
-```bash
-$(./scripts/setup-devenv.sh)
-```
+How to create bot?
+1. Create bot with [@BotFather](https://telegram.me/BotFather) and take Secret Token
+2. Create bot in App and add Secret Token
+3. Add Public Key from App as [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) with read access (and write access for bot exporting if you need it)
+4. Do import for this git repo
 
-This will install virtualenv and dependencies listed in requirements.txt. Then it will source it.
-If dependencies are already installed, this will only activate the existing virtualenv.
+Now you can talk with yours new Telegram Bot
 
-## Run
+See [more](https://help.bots.business/getting-started)
 
-With virtualenv activated run:
+## Commands - in commands folder
+File name - it is command name (Bot it can be rewritten in command description)
 
-```bash
-(venv) SPAMBOT_TOKEN='your-bot-token-here' python main.py
-```
+Command can have: `name`, `help`, `aliases` (second names), `answer`, `keyboard`, `scnarios` (for simple logic) and other options.
 
-### Example
+### Command description
+It is file header:
 
-Start a chat with the bot then:
+    /*CMD
+      command: /test
+      help: this is help for ccommand
+      need_reply: [ true or false here ]
+      auto_retry_time: [ time in sec ]
+      answer: it is example answer for /test command
+      keyboard: button1, button2
+      aliases: /test2, /test3
+    CMD*/
 
-1. Case 1: Simple message with default intervals (spam interval 5s, delete interval 1s)
+See [more](https://help.bots.business/commands)
 
-```
-you: /spam simple
-# second 0
-bot: simple
-# second: 1
-bot: *deletes message*
-# second 5
-bot: simple
-# repeat
-```
+### Command body
+It is command code in JavaScript.
+Use Bot Java Script for logic in command.
 
-2. Case 2: Larger message with id and custom intervals
+For example:
+> Bot.sendMessage(2+2);
 
-```
-you: /spam some big message #big
-# second 0
-bot: some big message
-you: /spamint #big 10
-bot: New interval set for #big: 10.0 seconds
-you: /delint #big 25
-bot: New interval set for #big: 10.0 seconds
-# now bot will send every 10 seconds and delete after 25 (overlap)
-```
+See [more](https://help.bots.business/scenarios-and-bjs)
 
-To stop messages, run:
 
-```
-you: /stop simple
-you: /stop #big
-```
+## Libraries - in libs folder
+You can store common code in the libs folder. File name - it is library name.
+
+For example code in myLib.js:
+
+    function hello(){ Bot.sendMessage("Hello from lib!") }
+    function goodbye(name){ Bot.sendMessage("Goodbye, " + name) }
+
+    publish({
+      sayHello: hello,
+      sayGoodbyeTo: goodbye
+    })
+
+then you can run in any bot's command:
+
+    Libs.myLib.hello()
+    Libs.myLib.sayGoodbyeTo("Alice")
+
+See [more](https://help.bots.business/git/library)
+
+## Other bots example
+See other bots examples in the [github](https://github.com/bots-business?utf8=✓&tab=repositories&q=&type=public&language=javascript) or in the [Bot Store](https://bots.business/)
+
+
+## Other help
+[Help.bots.business](https://help.bots.business)
+
+## API
+See [API](https://api.bots.business/docs#/docs/summary)
+
+
+![](https://bots.business/images/web-logo.png)
